@@ -16,9 +16,6 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
-
 - task: SonarCloudPrepare@1
   inputs:
     SonarCloud: 'Sonar Cloud'
@@ -26,6 +23,10 @@ steps:
     scannerMode: 'MSBuild'
     projectKey: 'behl1anmol_Planner'
     projectName: 'Planner'
+
+- script: dotnet build --configuration $(buildConfiguration)
+  displayName: 'dotnet build $(buildConfiguration)'
+
 - task: SonarCloudAnalyze@1
 
 - task: SonarCloudPublish@1
