@@ -22,4 +22,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
   </ItemGroup>
 
+  <Target Name="openapi" AfterTargets="Build">
+    <Message Text="generating openapi" Importance="high" />
+    <Exec EnvironmentVariables="DOTNET_ENVIRONMENT=SwaggerBuild" Command="dotnet tool run swagger tofile --yaml --output openapi.yaml $(OutputPath)$(AssemblyName).dll v1" />
+  </Target>
+
+
 </Project>

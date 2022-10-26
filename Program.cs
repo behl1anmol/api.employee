@@ -20,14 +20,15 @@ builder.Services.AddDbContext<EmployeeContext>();
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 builder.Configuration.AddJsonFile($"appsettings.Dev.json", optional: true);
 builder.Configuration.AddEnvironmentVariables();
-var keyVaultEndpoint = builder.Configuration["KeyVault:Vault"];
-var clientID = builder.Configuration["KeyVault:ClientId"];
-var clientSecret = builder.Configuration["KeyVault:ClientSecret"];
+if (builder.Environment.EnvironmentName != "SwaggerBuild")
+{
+    var keyVaultEndpoint = builder.Configuration["KeyVault:Vault"];
 
 
-var azureServiceTokenProvider = new AzureServiceTokenProvider();
-var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
-builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, keyVaultClient, new DefaultKeyVaultSecretManager());
+    var azureServiceTokenProvider = new AzureServiceTokenProvider();
+    var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
+    builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, keyVaultClient, new DefaultKeyVaultSecretManager());
+}
 
 var app = builder.Build();
 
