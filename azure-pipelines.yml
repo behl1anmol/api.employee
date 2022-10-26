@@ -18,3 +18,22 @@ variables:
 steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
+
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'Sonar Cloud'
+    organization: 'behl1anmol'
+    scannerMode: 'MSBuild'
+    projectKey: 'behl1anmol_Planner'
+    projectName: 'Planner'
+- task: SonarCloudAnalyze@1
+
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
+
+- task: dependency-check-build-task@6
+  inputs:
+    projectName: 'NetForce'
+    scanPath: '$(Build.SourcesDirectory)/NetForce'
+    format: 'HTML'
