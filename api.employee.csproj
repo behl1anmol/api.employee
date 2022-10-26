@@ -25,7 +25,7 @@
   <Target Name="openapi" AfterTargets="Build">
     <Message Text="generating openapi" Importance="high" />
     <Exec EnvironmentVariables="DOTNET_ENVIRONMENT=SwaggerBuild" Command="dotnet tool restore" />
-    <Exec EnvironmentVariables="DOTNET_ENVIRONMENT=SwaggerBuild" Command="dotnet tool run swagger tofile --yaml --output openapi.yaml $(OutputPath)$(AssemblyName).dll v1" />
+    <Exec EnvironmentVariables="DOTNET_ENVIRONMENT=SwaggerBuild" Command="dotnet tool run swagger tofile --yaml --output swagger.json $(OutputPath)$(AssemblyName).dll v1" />
   </Target>
 
 
