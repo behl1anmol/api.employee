@@ -64,7 +64,7 @@ jobs:
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
         publish-profile: ${{ secrets.apiemployee22_FFFF }}
     - name: Azure Login
-      uses: azure/login@v1
+      uses: azure/actions/login@v1
       with:
         creds: ${{ secrets.apiemployeeapi_SPN }}
     - name: Import API into Azure API Management
