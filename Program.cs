@@ -6,6 +6,9 @@ using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration.AzureKeyVault;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+using Azure.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,23 +23,11 @@ builder.Services.AddDbContext<EmployeeContext>();
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 builder.Configuration.AddJsonFile($"appsettings.Dev.json", optional: true);
 builder.Configuration.AddEnvironmentVariables();
-if (builder.Environment.EnvironmentName != "SwaggerBuild")
-{
-    var keyVaultEndpoint = builder.Configuration["KeyVault:Vault"];
-
-
-    var azureServiceTokenProvider = new AzureServiceTokenProvider();
-    var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
-    builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, keyVaultClient, new DefaultKeyVaultSecretManager());
-}
 
 var app = builder.Build();
 
-
 app.UseSwagger();
 app.UseSwaggerUI();
-
-
 
 app.UseHttpsRedirection();
 
