@@ -35,6 +35,6 @@ steps:
 
 - task: dependency-check-build-task@6
   inputs:
-    projectName: ''
+    projectName: '$(Build.SourcesDirectory)/'
     scanPath: '$(Build.SourcesDirectory)/'
     format: 'HTML'
