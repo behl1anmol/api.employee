@@ -35,6 +35,6 @@ steps:
 
 - task: dependency-check-build-task@6
   inputs:
-    projectName: '$(Build.SourcesDirectory)/'
-    scanPath: '$(Build.SourcesDirectory)/'
+    projectName: 'api.employee'
+    scanPath: '$(Build.SourcesDirectory)/api.employee.csproj'
     format: 'HTML'
